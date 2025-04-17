@@ -1,0 +1,8 @@
+
+
+.bgImg{
+    background: linear-gradient(to left, rgba(97, 97, 97, 0.5), rgba(109, 109, 110, 0.5)), url("../../assert/heroImage/hero.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
