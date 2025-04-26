@@ -5,6 +5,14 @@ import { FaTicketAlt, FaRegCircle } from 'react-icons/fa'; // Utilisation d'icô
 import Header from '../../sections/Header/Header';
 import Footer from '../../sections/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
+import {
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaUser,
+  FaCheckCircle,
+  FaArrowLeft,
+} from "react-icons/fa";
+import { IoMdCheckmarkCircleOutline, IoMdRadioButtonOff } from "react-icons/io"; 
 
 
 
@@ -15,7 +23,7 @@ export default function CreateEventTicketingPage() {
   return (
     <div>
       <Header/>
-      <EventTicketing />
+      <EventTicketing /> 
       <Footer/>
     </div>
   );
@@ -23,6 +31,14 @@ export default function CreateEventTicketingPage() {
 
 // Composant pour le formulaire de billetterie
 function EventTicketing() {
+
+  const progressSteps = [
+    { name: "Edit", completed: true },
+    { name: "Banner", completed: true },
+    { name: "Ticketing", completed: false },
+    { name: "Review", completed: false }, // La dernière étape n'est pas encore complétée
+  ];
+  const currentStepIndex = progressSteps.findIndex((step) => !step.completed);
   const navigate = useNavigate();
   // État pour suivre le type d'événement sélectionné
   const [eventType, setEventType] = useState('ticketed'); // 'ticketed' ou 'free'
@@ -54,35 +70,53 @@ function EventTicketing() {
         </div>
 
         {/* Barre de progression */}
-        <div className="mb-10 mt-6 px-4">
-          <div className="flex items-center justify-between">
-            {steps.map((step, index) => (
-              <React.Fragment key={step}>
-                <div className="flex flex-col items-center">
-                  <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center border-2 ${
-                      step === currentStep || steps.indexOf(step) < steps.indexOf(currentStep)
-                        ? 'bg-indigo-600 border-indigo-600'
-                        : 'bg-white border-gray-300'
-                    } ${step === currentStep ? 'ring-2 ring-offset-2 ring-indigo-300' : ''}`}
-                  >
-                    {/* Affiche une coche pour les étapes complétées */}
-                    {steps.indexOf(step) < steps.indexOf(currentStep) && (
-                       <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                    )}
+                  <div className="mb-8 px-4">
+                    <div className="flex items-center justify-between">
+                      {progressSteps.map((step, index) => (
+                        <React.Fragment key={step.name}>
+                          <div className="flex flex-col items-center text-center">
+                            {/* Icône de l'étape */}
+                            <div
+                              className={`rounded-full w-6 h-6 flex items-center justify-center mb-1 ${
+                                step.completed
+                                  ? "bg-blue-600 text-white"
+                                  : index === currentStepIndex
+                                  ? "border-2 border-blue-600 text-blue-600"
+                                  : "bg-gray-300 text-gray-500"
+                              }`}
+                            >
+                              {step.completed ? (
+                                <FaCheckCircle size={14} />
+                              ) : (
+                                <IoMdRadioButtonOff size={14} />
+                              )}
+                            </div>
+                            {/* Nom de l'étape */}
+                            <span
+                              className={`text-xs font-medium ${
+                                step.completed || index === currentStepIndex
+                                  ? "text-gray-700"
+                                  : "text-gray-400"
+                              }`}
+                            >
+                              {step.name}
+                            </span>
+                          </div>
+                          {/* Ligne de connexion entre les étapes */}
+                          {index < progressSteps.length - 1 && (
+                            <div
+                              className={`flex-1 h-0.5 mx-2 -mt-4 ${
+                                progressSteps[index + 1].completed ||
+                                index + 1 === currentStepIndex
+                                  ? "bg-blue-600"
+                                  : "bg-gray-300"
+                              }`}
+                            ></div>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
                   </div>
-                  <span className={`mt-2 text-xs ${step === currentStep ? 'text-indigo-600 font-semibold' : 'text-gray-500'}`}>
-                    {step}
-                  </span>
-                </div>
-                {/* Ligne de connexion entre les étapes */}
-                {index < steps.length - 1 && (
-                  <div className={`flex-1 h-0.5 mx-2 ${steps.indexOf(step) < steps.indexOf(currentStep) ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        </div> 
 
 
         {/* Section Type d'événement */}

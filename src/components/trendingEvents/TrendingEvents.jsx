@@ -2,7 +2,8 @@
 
 import React from 'react'
 import TrendingEventsData from '../../utils/trendingEventsData'
-import EventsCard from '../eventsCard/EventsCard'
+// import EventsCard from '../eventsCard/EventsCard'
+import { EventCard } from '../eventsCard/EventsCard';
 
 function TrendingEvents({handleDisplay}) {
   const styleEventsCard = [
@@ -28,14 +29,14 @@ function TrendingEvents({handleDisplay}) {
   return (
     <div className='w-[83%] mx-auto mb-[15vh]'>
       <div className='mb-[50px]'>
-        <h2 className='font-[Montserrat] font-[700] text-[40px]'>Trending Events around the World</h2>
+        <h2 className='font-[Montserrat] font-[700] text-[20px]'>Trending Events around the World</h2>
       </div>
       <div>
-        <EventsCard Content={TrendingEventsData} styleDiv={styleEventsCard} handleDisplay={handleDisplay}/>
+        <EventCard Content={TrendingEventsData} styleDiv={styleEventsCard} handleDisplay={handleDisplay}/>
       </div>
       <div className='flex justify-center items-center'>
-            <div className='flex justify-center items-center py-18px w-[610px] h-[60px] border-solid border-2 border-black'>
-                <button className='font-[Open Sans] font-[600] text-[24px]'>See More</button>
+            <div className='flex justify-center items-center py-18px w-[610px] h-[50px] border-solid border-2 border-black'>
+                <button className='font-[Open Sans] font-[600] text-[20px]'>See More</button>
             </div>
         </div>
     </div>

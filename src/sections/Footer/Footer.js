@@ -10,8 +10,8 @@ function Footer() {
     <div className="footer bg-[#2B293D]">
       <div className="w-[83%] mx-auto flex flex-wrap flex-col">
         <div className="flex flex-wrap justify-between py-12 text-[#A9A9A9] ">
-          <div>
-            <div>
+          <div className="mb-6">
+            <div >
               <h3>Company Info</h3>
               <nav>
                 <ul>
@@ -38,7 +38,7 @@ function Footer() {
             </div>
           </div>
           {/* help */}
-          <div>
+          <div className="mb-6">
             <h3>Help</h3>
             <nav>
               <ul>
@@ -58,7 +58,7 @@ function Footer() {
             </nav>
           </div>
           {/* Categories */}
-          <div>
+          <div className="mb-6">
             <h3>Categories</h3>
             <nav>
               <ul>
@@ -90,7 +90,7 @@ function Footer() {
             </nav>
           </div>
           {/* Follow Us */}
-          <div>
+          <div className="mb-6">
             <h3>Follow Us</h3>
             <nav>
               <ul>
@@ -110,7 +110,7 @@ function Footer() {
             </nav>
           </div>
           {/* Download The App */}
-          <div>
+          <div className="mb-6">
             <h3>Download The App</h3>
             <a href="">
             <div className="flex flex-wrap items-center justify-center rounded-md border-solid border-[1px] border-[#A9A9A9] h-auto w-auto p-2 mb-4 ">

@@ -18,21 +18,19 @@ function MainPage({ handleDisplay, hasText, goToEditPage }) {
   };
   return (
     <div>
-        {
-            !hasText ? (
-                <>
-                          <ExploreCategory />
-      <PopularEvents handleDisplay={handleDisplay} />
-      <BestOnlineEvents handleDisplay={handleDisplay} />
-      <SpecialyForYou goToInterest={goToInterest} />
-      <TrendingEvents handleDisplay={handleDisplay} />
-      <CreateEventCTA goToEditPage={goToEditPage}/>
-      <NewsLetters />
-                </>
-            ):(
-                <SearchResultsPage/>
-            )
-        }
+      {!hasText ? (
+        <>
+          <ExploreCategory />
+          <PopularEvents handleDisplay={handleDisplay} />
+          <BestOnlineEvents handleDisplay={handleDisplay} />
+          <SpecialyForYou goToInterest={goToInterest} />
+          <TrendingEvents handleDisplay={handleDisplay} />
+          <CreateEventCTA goToEditPage={goToEditPage} />
+          <NewsLetters />
+        </>
+      ) : (
+        <SearchResultsPage />
+      )}
     </div>
   );
 }

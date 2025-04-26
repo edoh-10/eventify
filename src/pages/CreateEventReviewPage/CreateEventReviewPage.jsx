@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { IoMdCheckmarkCircleOutline, IoMdRadioButtonOff } from "react-icons/io"; // Icônes alternatives si besoin
 import Header from "../../sections/Header/Header";
-import Footer from "../../sections/Footer/Footer";
+import Footer from "../../sections/Footer/Footer"; 
 
 // Composant principal de l'aperçu de l'événement
 const CreateEventReviewPage = () => {
@@ -78,7 +78,7 @@ const CreateEventReviewPage = () => {
                   {/* Ligne de connexion entre les étapes */}
                   {index < progressSteps.length - 1 && (
                     <div
-                      className={`flex-1 h-0.5 mx-2 ${
+                      className={`flex-1 h-0.5 mx-2 -mt-4 ${
                         progressSteps[index + 1].completed ||
                         index + 1 === currentStepIndex
                           ? "bg-blue-600"

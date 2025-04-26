@@ -6,12 +6,19 @@ import Hero from '../../../sections/Hero/Hero'
 import Footer from '../../../sections/Footer/Footer'
 import SearchResultsData from '../../../utils/searchResultsData'
 import SearchResultsCard from '../../../components/searchResultsCard/SearchResultsCard'
+import CategoriesData from '../../../utils/categoriesData'
+import { useParams } from 'react-router-dom'
 
 function EventsPage1() {
 
+  const {id} = useParams();
+  const Id = String(id).trim();
+  const data = CategoriesData.find((d) => d.titre === Id)
+
   return (
-    <div>
+    <div> 
       <Header/>
+      {data.titre}
       <Hero/>
       <div className='flex mt-12 w-screen'>
         {/* filters */}

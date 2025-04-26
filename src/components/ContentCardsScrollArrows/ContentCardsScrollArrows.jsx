@@ -22,8 +22,30 @@ function ContentCardsScrollArrows() {
       <Swiper
         modules={[Navigation, A11y]}
         spaceBetween={20}
-        slidesPerView={3}
+        slidesPerView={1}
         navigation
+        breakpoints={{
+          // quand la largeur de la fenêtre est >= 640px
+          630: {
+            slidesPerView: 1, // Afficher 2 slides
+            spaceBetween: 0, // Espace de 20px
+          },
+          // quand la largeur de la fenêtre est >= 768px
+          1000: {
+            slidesPerView: 2, // Afficher 3 slides
+            spaceBetween: 20, // Espace de 30px
+          },
+          // quand la largeur de la fenêtre est >= 1024px
+          1504: {
+            slidesPerView: 3, // Afficher 4 slides
+            spaceBetween: 40, // Espace de 40px
+          },
+          // // Vous pouvez ajouter autant de breakpoints que nécessaire
+          //  1280: {
+          //   slidesPerView: 5,
+          //   spaceBetween: 50,
+          // },
+        }}
       >
         {ContentData.map((list2) => (
           <SwiperSlide key={list2.id}>

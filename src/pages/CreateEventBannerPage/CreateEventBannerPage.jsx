@@ -4,6 +4,16 @@ import { FiArrowLeft } from 'react-icons/fi';
 import Footer from '../../sections/Footer/Footer';
 import Header from '../../sections/Header/Header';
 import { useNavigate } from 'react-router-dom';
+import {
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaTicketAlt,
+  FaUser,
+  FaCheckCircle,
+  FaRegCircle,
+  FaArrowLeft,
+} from "react-icons/fa";
+import { IoMdCheckmarkCircleOutline, IoMdRadioButtonOff } from "react-icons/io"; // Icônes alternatives si besoin
 
 // Main component for the Event Banner Upload page
 function CreateEventBannerPage() {
@@ -16,13 +26,21 @@ function CreateEventBannerPage() {
     if (event.target.files.length > 0) {
       setFileName(event.target.files[0].name);
     } else {
-      setFileName('No file chosen');
+      setFileName('No file chosen'); 
     }
   };
 
   // Progress steps data
   const steps = ['Edit', 'Banner', 'Ticketing', 'Review'];
   const currentStep = 'Banner'; // Set the current active step
+
+  const progressSteps = [
+    { name: "Edit", completed: true },
+    { name: "Banner", completed: false },
+    { name: "Ticketing", completed: false },
+    { name: "Review", completed: false }, // La dernière étape n'est pas encore complétée
+  ];
+  const currentStepIndex = progressSteps.findIndex((step) => !step.completed); // Trouve la première étape non complétée
 
   return (
     <div>
@@ -43,38 +61,55 @@ function CreateEventBannerPage() {
           </div>
         </div>
 
-        {/* Progress Bar Section */}
-        <div className="mb-12 px-4">
-          <div className="flex items-center justify-between">
-            {steps.map((step, index) => {
-              const isActive = step === currentStep;
-              const isCompleted = steps.indexOf(step) < steps.indexOf(currentStep);
-
-              return (
-                <React.Fragment key={step}>
-                  {/* Step Circle and Label */}
-                  <div className="flex flex-col items-center text-center z-10">
-                    <div
-                      className={`w-6 h-6 rounded-full flex items-center justify-center border-2 ${
-                        isActive || isCompleted ? 'border-indigo-600' : 'border-gray-300'
-                      } ${isActive ? 'bg-indigo-600' : isCompleted ? 'bg-indigo-600' : 'bg-white'}`}
-                    >
-                      {/* Optional: Add checkmark for completed steps */}
-                      {isCompleted && <span className="text-white text-xs">✓</span>}
+         {/* Barre de progression */}
+                  <div className="mb-8 px-4">
+                    <div className="flex items-center justify-between">
+                      {progressSteps.map((step, index) => (
+                        <React.Fragment key={step.name}>
+                          <div className="flex flex-col items-center text-center">
+                            {/* Icône de l'étape */}
+                            <div
+                              className={`rounded-full w-6 h-6 flex items-center justify-center mb-1 ${
+                                step.completed
+                                  ? "bg-blue-600 text-white"
+                                  : index === currentStepIndex
+                                  ? "border-2 border-blue-600 text-blue-600"
+                                  : "bg-gray-300 text-gray-500"
+                              }`}
+                            >
+                              {step.completed ? (
+                                <FaCheckCircle size={14} />
+                              ) : (
+                                <IoMdRadioButtonOff size={14} />
+                              )}
+                            </div>
+                            {/* Nom de l'étape */}
+                            <span
+                              className={`text-xs font-medium ${
+                                step.completed || index === currentStepIndex
+                                  ? "text-gray-700"
+                                  : "text-gray-400"
+                              }`}
+                            >
+                              {step.name}
+                            </span>
+                          </div>
+                          {/* Ligne de connexion entre les étapes */}
+                          {index < progressSteps.length - 1 && (
+                            <div
+                              className={`flex-1 h-0.5 mx-2 -mt-4 ${
+                                progressSteps[index + 1].completed ||
+                                index + 1 === currentStepIndex
+                                  ? "bg-blue-600"
+                                  : "bg-gray-300"
+                              }`}
+                            ></div>
+                          )}
+                        </React.Fragment>
+                      ))}
                     </div>
-                    <p className={`mt-2 text-xs font-medium ${isActive || isCompleted ? 'text-indigo-600' : 'text-gray-500'}`}>
-                      {step}
-                    </p>
                   </div>
-                  {/* Connecting Line (except for the last step) */}
-                  {index < steps.length - 1 && (
-                    <div className={`flex-1 h-0.5 -mx-1 mb-6 ${isCompleted ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </div>
-        </div>
+        
 
 
         {/* Upload Image Section */}

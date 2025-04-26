@@ -5,6 +5,14 @@ import { BsCircleFill, BsCheckCircleFill } from 'react-icons/bs'; // Using diffe
 import Header from '../../sections/Header/Header';
 import Footer from '../../sections/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
+import {
+  FaMapMarkerAlt,
+  FaTicketAlt,
+  FaUser,
+  FaCheckCircle,
+  FaRegCircle,
+} from "react-icons/fa";
+import { IoMdCheckmarkCircleOutline, IoMdRadioButtonOff } from "react-icons/io"; // Icônes alternatives si besoin
 
 // Main App component
 function CreateEventEditPage() {
@@ -49,6 +57,16 @@ function CreateEventEditPage() {
         alert('Form submitted! Check the console for data.'); // Replace alert in production
     };
 
+
+    const progressSteps = [
+        { name: "Edit", completed: true },
+        { name: "Banner", completed: false },
+        { name: "Ticketing", completed: false },
+        { name: "Review", completed: false }, // La dernière étape n'est pas encore complétée
+      ];
+      const currentStepIndex = progressSteps.findIndex((step) => !step.completed); // Trouve la première étape non complétée
+
+
     return (
         <div>
           <Header/>
@@ -61,45 +79,54 @@ function CreateEventEditPage() {
 
                 <h1 className="text-2xl font-semibold mb-4">Create a New Event</h1>
 
-                {/* Progress Bar */}
-                <div className="flex justify-between items-start mb-10 w-full ">
-                    {steps.map((step, index) => {
-                        const isActive = index === activeStep;
-                        const isCompleted = index < activeStep; // Steps before active are completed
-                        const isFirst = index === 0;
-                        const isLast = index === steps.length - 1;
-
-                        return (
-                            <div key={step.name} className="progress-step flex-1 flex flex-col items-center relative">
-                                {/* Connecting Lines */}
-                                {!isFirst && (
-                                    <div className={`absolute top-3 right-1/2 w-1/2 h-0.5 ${ (isActive || isCompleted) ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>
-                                )}
-                                {!isLast && (
-                                    <div className={`absolute top-3 left-1/2 w-1/2 h-0.5 ${isCompleted ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>
-                                )}
-
-                                {/* Circle */}
-                                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center z-10 ${
-                                    isActive ? 'bg-indigo-600 border-indigo-600 text-white' :
-                                    isCompleted ? 'bg-indigo-600 border-indigo-600 text-white' :
-                                    'border-gray-300 bg-white text-gray-300'
-                                }`}>
-                                    {isCompleted ? <BsCheckCircleFill size="100%" /> : <BsCircleFill size="40%" />}
-                                </div>
-
-                                {/* Label */}
-                                <div className={`text-xs mt-1 text-center ${
-                                    isActive ? 'font-semibold text-indigo-600' :
-                                    isCompleted ? 'text-indigo-600' :
-                                    'text-gray-500'
-                                }`}>
-                                    {step.name}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+{/* Barre de progression */}
+          <div className="mb-8 px-4">
+            <div className="flex items-center justify-between">
+              {progressSteps.map((step, index) => (
+                <React.Fragment key={step.name}>
+                  <div className="flex flex-col items-center text-center">
+                    {/* Icône de l'étape */}
+                    <div
+                      className={`rounded-full w-6 h-6 flex items-center justify-center mb-1 ${
+                        step.completed
+                          ? "bg-blue-600 text-white"
+                          : index === currentStepIndex
+                          ? "border-2 border-blue-600 text-blue-600"
+                          : "bg-gray-300 text-gray-500"
+                      }`}
+                    >
+                      {step.completed ? (
+                        <FaCheckCircle size={14} />
+                      ) : (
+                        <IoMdRadioButtonOff size={14} />
+                      )}
+                    </div>
+                    {/* Nom de l'étape */}
+                    <span
+                      className={`text-xs font-medium ${
+                        step.completed || index === currentStepIndex
+                          ? "text-gray-700"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      {step.name}
+                    </span>
+                  </div>
+                  {/* Ligne de connexion entre les étapes */}
+                  {index < progressSteps.length - 1 && (
+                    <div
+                      className={`flex-1 h-0.5 mx-2 -mt-4 ${
+                        progressSteps[index + 1].completed ||
+                        index + 1 === currentStepIndex
+                          ? "bg-blue-600"
+                          : "bg-gray-300"
+                      }`}
+                    ></div>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
 
 
                 {/* Form */}
